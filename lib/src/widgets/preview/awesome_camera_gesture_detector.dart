@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camerawesome/pigeon.dart';
+import 'package:camerawesome/src/widgets/preview/awesome_focus_indicator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import 'package:camerawesome/src/widgets/preview/awesome_focus_indicator.dart';
 
 Widget _awesomeFocusBuilder(Offset tapPosition) {
   return AwesomeFocusIndicator(position: tapPosition);
@@ -101,8 +101,13 @@ class _AwesomeCameraGestureDetector
                   _zoomScale -= _accuracy;
                 }
 
-                _zoomScale = _zoomScale.clamp(0, 1);
-                // widget.onPreviewScale!.onScale(_zoomScale);
+                if (Platform.isIOS) {
+                  _zoomScale = _zoomScale.clamp(0.0, 0.05);
+                } else {
+                  _zoomScale = _zoomScale.clamp(0.0, 1.0);
+                }
+
+                widget.onPreviewScale!.onScale(_zoomScale);
                 _lastScale = details.scale;
               },
             (instance) {},
