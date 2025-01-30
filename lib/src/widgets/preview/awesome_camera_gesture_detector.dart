@@ -102,7 +102,7 @@ class _AwesomeCameraGestureDetector
                 }
 
                 _zoomScale = _zoomScale.clamp(0, 1);
-                widget.onPreviewScale!.onScale(_zoomScale);
+                // widget.onPreviewScale!.onScale(_zoomScale);
                 _lastScale = details.scale;
               },
             (instance) {},
